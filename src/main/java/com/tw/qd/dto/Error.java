@@ -1,4 +1,4 @@
-package com.tw.qd.exception;
+package com.tw.qd.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
