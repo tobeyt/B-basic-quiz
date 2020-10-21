@@ -29,13 +29,13 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createUser(@RequestBody User user) {
+    public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
     @PostMapping("/{id}/educations")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createEducationByUserId(@PathVariable Long id, @RequestBody Education education) {
-        userService.createEducationByUserId(id, education);
+    public Education createEducationByUserId(@PathVariable Long id, @RequestBody Education education) {
+        return userService.createEducationByUserId(id, education);
     }
 }

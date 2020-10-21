@@ -70,12 +70,13 @@ public class UserRepository {
         return ++generatedUserId;
     }
 
-    public Long createUser(User user) {
+    public User createUser(User user) {
         users.add(user);
-        return user.getId();
+        return user;
     }
 
-    public void createEducationByUserId(Education education) {
+    public Education createEducationByUserId(Education education) {
         educations.add(education);
+        return education;
     }
 }

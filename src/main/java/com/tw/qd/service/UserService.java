@@ -24,15 +24,14 @@ public class UserService {
         return userRepository.getEducationByUserId(id);
     }
 
-    public Long createUser(User user) {
+    public User createUser(User user) {
         user.setId(userRepository.getGeneratedUserId());
         return userRepository.createUser(user);
     }
 
-    public void createEducationByUserId(Long id, Education education) {
+    public Education createEducationByUserId(Long id, Education education) {
         userRepository.getUserById(id).orElseThrow(() -> new UserException("用户不存在"));
-        System.out.println("这里被执行了");
         education.setUserId(id);
-        userRepository.createEducationByUserId(education);
+        return userRepository.createEducationByUserId(education);
     }
 }
