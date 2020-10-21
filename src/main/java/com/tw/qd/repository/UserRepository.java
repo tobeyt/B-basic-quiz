@@ -2,6 +2,7 @@ package com.tw.qd.repository;
 
 import com.tw.qd.dto.Education;
 import com.tw.qd.dto.User;
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository {
+    private Long generatedUserId = 1L;
     private List<User> users = new ArrayList<User>() {
         {
             add(new User(
@@ -62,5 +64,14 @@ public class UserRepository {
 
     public List<Education> getEducationByUserId(Long id) {
         return educations.stream().filter(education -> education.getUserId().equals(id)).collect(Collectors.toList());
+    }
+
+    public Long getGeneratedUserId() {
+        return ++generatedUserId;
+    }
+
+    public Long createUser(User user) {
+        users.add(user);
+        return user.getId();
     }
 }

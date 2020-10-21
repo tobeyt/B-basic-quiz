@@ -23,4 +23,9 @@ public class UserService {
     public List<Education> getEducationsByUserId(Long id) {
         return userRepository.getEducationByUserId(id);
     }
+
+    public Long createUser(User user) {
+        user.setId(userRepository.getGeneratedUserId());
+        return userRepository.createUser(user);
+    }
 }
