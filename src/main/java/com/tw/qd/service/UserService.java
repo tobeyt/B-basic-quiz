@@ -21,6 +21,7 @@ public class UserService {
     }
 
     public List<Education> getEducationsByUserId(Long id) {
+        userRepository.getUserById(id).orElseThrow(() -> new UserException("用户不存在"));
         return userRepository.getEducationByUserId(id);
     }
 
