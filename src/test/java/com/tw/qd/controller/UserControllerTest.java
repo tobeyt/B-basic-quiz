@@ -1,12 +1,10 @@
 package com.tw.qd.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tw.qd.dto.Education;
 import com.tw.qd.dto.User;
 import com.tw.qd.repository.UserRepository;
-import com.tw.qd.service.UserService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,11 +27,25 @@ class UserControllerTest {
 
     @Autowired
     UserRepository userRepository;
-    private static ObjectMapper objectMapper;
 
-    @BeforeAll
-    static void beforeAll() {
-        objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private User user;
+    private Education education;
+
+    @BeforeEach
+    void init() {
+        user = User.builder()
+                .name("覃狄")
+                .description("TWer")
+                .avatar("www.thoughtworks.com.cn")
+                .age(22L)
+                .build();
+
+        education = Education.builder()
+                .description("这是我的简介")
+                .title("北京大学")
+                .year(2020L)
+                .build();
     }
 
     @Test
@@ -66,28 +78,17 @@ class UserControllerTest {
 
     @Test
     void should_create_user() throws Exception {
-        User user = User.builder()
-                .name("qindi")
-                .avatar("www.baidu.com/avatar")
-                .description("twer")
-                .age(22L)
-                .build();
         String jsonOfUser = objectMapper.writeValueAsString(user);
 
         mockMvc.perform(post("/users")
                 .content(jsonOfUser).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.name", is("qindi")))
+                .andExpect(jsonPath("$.name", is("覃狄")))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    void should_get_valid_exception_when_user_invalid() throws Exception{
-        User user = User.builder()
-                .name("qindi")
-                .avatar("www.baidu.com/avatar")
-                .description("twer")
-                .age(15L)
-                .build();
+    void should_get_valid_exception_when_user_invalid() throws Exception {
+        user.setAge(10L);
         String jsonOfUser = objectMapper.writeValueAsString(user);
 
         mockMvc.perform(post("/users")
@@ -96,12 +97,7 @@ class UserControllerTest {
     }
 
     @Test
-    void should_create_education_by_userId() throws Exception{
-        Education education = Education.builder()
-                .description("这是我的简介这是我的简介")
-                .title("北京大学")
-                .year(2020L)
-                .build();
+    void should_create_education_by_userId() throws Exception {
         String jsonOfEducation = objectMapper.writeValueAsString(education);
 
         mockMvc.perform(post("/users/1/educations")
@@ -112,12 +108,7 @@ class UserControllerTest {
     }
 
     @Test
-    void should_throw_exception_when_create_education_by_userId_but_userId_not_exist() throws Exception{
-        Education education = Education.builder()
-                .description("这是我的简介这是我的简介")
-                .title("北京大学")
-                .year(2020L)
-                .build();
+    void should_throw_exception_when_create_education_by_userId_but_userId_not_exist() throws Exception {
         String jsonOfEducation = objectMapper.writeValueAsString(education);
 
         mockMvc.perform(post("/users/2/educations")
@@ -127,11 +118,8 @@ class UserControllerTest {
     }
 
     @Test
-    void should_throw_exception_when_create_education_by_userId_with_invalid_fields() throws Exception{
-        Education education = Education.builder()
-                .title("北京大学")
-                .year(2020L)
-                .build();
+    void should_throw_exception_when_create_education_by_userId_with_invalid_fields() throws Exception {
+        education.setTitle("");
         String jsonOfEducation = objectMapper.writeValueAsString(education);
 
         mockMvc.perform(post("/users/1/educations")
