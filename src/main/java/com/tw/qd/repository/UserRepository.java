@@ -74,4 +74,8 @@ public class UserRepository {
         users.add(user);
         return user.getId();
     }
+
+    public void createEducationByUserId(Education education) {
+        educations.add(education);
+    }
 }

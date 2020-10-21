@@ -17,7 +17,7 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        return userRepository.getUserById(id).orElseThrow(()->new UserException("用户不存在"));
+        return userRepository.getUserById(id).orElseThrow(() -> new UserException("用户不存在"));
     }
 
     public List<Education> getEducationsByUserId(Long id) {
@@ -27,5 +27,12 @@ public class UserService {
     public Long createUser(User user) {
         user.setId(userRepository.getGeneratedUserId());
         return userRepository.createUser(user);
+    }
+
+    public void createEducationByUserId(Long id, Education education) {
+        userRepository.getUserById(id).orElseThrow(() -> new UserException("用户不存在"));
+        System.out.println("这里被执行了");
+        education.setUserId(id);
+        userRepository.createEducationByUserId(education);
     }
 }
