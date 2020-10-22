@@ -15,6 +15,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Error handle(UserException exception) {
+        // TODO GTB-3: - 了解下HttpStatus.NOT_FOUND.getReasonPhrase()
         return new Error(Instant.now().toString(), HttpStatus.NOT_FOUND.value(), "404 NOT FOUND",
                 exception.getMessage());
     }
@@ -22,6 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Error handle(MethodArgumentNotValidException exception) {
+        // TODO GTB-4: + 有考虑到方法返回值为null的情况并进行了处理
         return new Error(Instant.now().toString(), HttpStatus.BAD_REQUEST.value(), "400 BAD REQUEST",
                 Objects.requireNonNull(exception.getBindingResult().getFieldError()).getDefaultMessage());
     }

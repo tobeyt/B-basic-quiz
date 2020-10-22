@@ -20,6 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    // TODO GTB-3: - 建议用@PathVariable的value属性显式的指定请求参数名
     public User getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }

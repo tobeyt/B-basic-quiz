@@ -25,6 +25,7 @@ public class UserRepository {
     }
 
     public Long getGeneratedUserId() {
+        // TODO GTB-3: - ++操作线程不安全，可以了解下AtomicLong
         return ++generatedUserId;
     }
 

@@ -15,6 +15,8 @@ public class Education {
     private Long userId;
 
     @NotNull
+    // TODO GTB-3: - 是不是对历年的理解有什么误会？
+    // TODO GTB-3: - 校验失败时应该给出清晰的message
     @Min(1900)
     @Max(2100)
     private Long year;
