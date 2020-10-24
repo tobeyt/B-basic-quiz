@@ -17,8 +17,8 @@ public class Education {
     @NotNull
     // TODO GTB-3: - 是不是对历年的理解有什么误会？
     // TODO GTB-3: - 校验失败时应该给出清晰的message
-    @Min(1900)
-    @Max(2100)
+    @Min(value = 1900, message = "年份不应该早于1900年")
+    @Max(value = 2030, message = "年份不应该晚于2030年")
     private Long year;
 
     @NotNull
