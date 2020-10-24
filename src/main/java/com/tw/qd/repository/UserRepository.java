@@ -1,41 +1,9 @@
 package com.tw.qd.repository;
 
-import com.tw.qd.dto.Education;
-import com.tw.qd.dto.User;
+import com.tw.qd.entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Repository
-public class UserRepository {
-    private Long generatedUserId = 0L;
-    private final List<User> users = new ArrayList<>();
-
-    private final List<Education> educations = new ArrayList<>();
-
-    public Optional<User> getUserById(Long id) {
-        return users.stream().filter(user -> user.getId().equals(id)).findFirst();
-    }
-
-    public List<Education> getEducationByUserId(Long id) {
-        return educations.stream().filter(education -> education.getUserId().equals(id)).collect(Collectors.toList());
-    }
-
-    public Long getGeneratedUserId() {
-        // TODO GTB-3: - ++操作线程不安全，可以了解下AtomicLong
-        return ++generatedUserId;
-    }
-
-    public User createUser(User user) {
-        users.add(user);
-        return user;
-    }
-
-    public Education createEducationByUserId(Education education) {
-        educations.add(education);
-        return education;
-    }
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 }
