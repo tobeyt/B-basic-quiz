@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface EducationRepository extends JpaRepository<EducationEntity, Long> {
     List<EducationEntity> findAllByUserEntityId(long userId);
 }

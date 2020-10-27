@@ -46,7 +46,7 @@ public class QuizApplication implements ApplicationRunner {
                 .year(1990L)
                 .title("I was born in Katowice")
                 .description("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, exercitationem, totam, dolores iste dolore est aut modi.")
-                .userId(1L)
+                .userId(1L) 
                 .build());
         userService.createEducationByUserId(1L, Education.builder()
                 .year(2005L)
